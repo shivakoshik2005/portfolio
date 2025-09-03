@@ -8,12 +8,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Space Grotesk', sans-serif;
             background-color: #0d1117;
             color: #c9d1d9;
+        }
+        .signature {
+            font-family: 'Pacifico', cursive;
         }
         /* Gradient Text */
         .gradient-text {
@@ -44,11 +47,11 @@
             left: 0;
             right: 0;
             bottom: 0;
-            border-radius: 0.75rem; 
+            border-radius: 0.75rem;
             border: 2px solid transparent;
             background: linear-gradient(120deg, #22d3ee, #8b5cf6) border-box;
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) padding-box, 
+            -webkit-mask:
+                linear-gradient(#fff 0 0) padding-box,
                 linear-gradient(#fff 0 0);
             -webkit-mask-composite: destination-out;
             mask-composite: exclude;
@@ -357,7 +360,7 @@
                     <a href="#certifications" class="text-slate-300 hover:text-cyan-400 transition duration-300">Certifications</a>
                     <a href="#contact" class="text-slate-300 hover:text-cyan-400 transition duration-300">Contact</a>
                 </nav>
-                <a href="resume.pdf" target="_blank" class="hidden md:block border border-cyan-400 text-cyan-400 font-semibold py-2 px-5 rounded-lg hover:bg-cyan-400 hover:text-black transition duration-300">Resume</a>
+                <a href="KOLLURI%20SHIVA%20KOUSHIK.pdf" target="_blank" class="hidden md:block border border-cyan-400 text-cyan-400 font-semibold py-2 px-5 rounded-lg hover:bg-cyan-400 hover:text-black transition duration-300">Resume</a>
                 <button id="hamburger-btn" class="md:hidden text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
@@ -370,7 +373,7 @@
             <a href="#projects" class="mobile-link text-2xl text-slate-300 hover:text-cyan-400 transition duration-300">Projects</a>
             <a href="#certifications" class="mobile-link text-2xl text-slate-300 hover:text-cyan-400 transition duration-300">Certifications</a>
             <a href="#contact" class="mobile-link text-2xl text-slate-300 hover:text-cyan-400 transition duration-300">Contact</a>
-            <a href="resume.pdf" target="_blank" class="mobile-link border border-cyan-400 text-cyan-400 font-semibold py-2 px-5 rounded-lg hover:bg-cyan-400 hover:text-black transition duration-300">Resume</a>
+            <a href="KOLLURI%20SHIVA%20KOUSHIK.pdf" target="_blank" class="mobile-link border border-cyan-400 text-cyan-400 font-semibold py-2 px-5 rounded-lg hover:bg-cyan-400 hover:text-black transition duration-300">Resume</a>
         </div>
 
 
@@ -386,6 +389,7 @@
                     </h2>
                     <div class="flex justify-center space-x-4 reveal" style="transition-delay: 0.4s;">
                         <a href="#projects" class="bg-cyan-500 text-black font-bold py-3 px-8 rounded-lg hover:bg-cyan-400 transition duration-300 transform hover:scale-105">View My Work</a>
+                        <a href="KOLLURI%20SHIVA%20KOUSHIK.pdf" target="_blank" class="border border-cyan-400 text-cyan-400 font-semibold py-3 px-8 rounded-lg hover:bg-cyan-400 hover:text-black transition duration-300 transform hover:scale-105">Resume</a>
                     </div>
                 </div>
             </section>
@@ -397,10 +401,11 @@
                         <h2 class="text-4xl md:text-5xl font-bold text-white reveal">About Me</h2>
                     </div>
                     <div class="grid md:grid-cols-5 gap-12 items-center mb-32">
-                        <div class="md:col-span-2 reveal">
-                             <div class="glass-card rounded-2xl p-4 flex justify-center items-center">
+                        <div class="md:col-span-2 reveal text-center">
+                             <div class="glass-card rounded-2xl p-4 inline-block">
                                 <img src="https://i.pinimg.com/736x/aa/1f/4b/aa1f4bf6d29b91b26703b3e9a98ad15a.jpg" alt="Developer Profile" class="rounded-2xl w-full h-auto object-cover">
                              </div>
+                             <p class="signature text-3xl text-cyan-300 mt-4">Shivakoushik</p>
                         </div>
                         <div class="md:col-span-3 reveal" style="transition-delay: 0.2s;">
                             <p class="text-slate-300 text-lg mb-6">
@@ -408,12 +413,48 @@
                             </p>
                             <h3 class="text-2xl font-bold text-white mb-4">My Skillset</h3>
                             <div class="flex flex-wrap gap-3">
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Web Development</span>
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">UI/UX Design (Figma)</span>
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Artificial Intelligence</span>
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Django</span>
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Python</span>
-                                <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Problem Solving</span>
+                                <div class="w-full mb-6">
+                                    <h4 class="text-xl font-semibold mb-2 text-cyan-400">Languages</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">HTML</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">CSS</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">JavaScript</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Python</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Java</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">C</span>
+                                    </div>
+                                </div>
+                                <div class="w-full mb-6">
+                                    <h4 class="text-xl font-semibold mb-2 text-cyan-400">Frameworks & Libraries</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">React</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Tailwind</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Django</span>
+                                    </div>
+                                </div>
+                                <div class="w-full mb-6">
+                                    <h4 class="text-xl font-semibold mb-2 text-cyan-400">Databases</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">MySQL</span>
+                                    </div>
+                                </div>
+                                <div class="w-full mb-6">
+                                    <h4 class="text-xl font-semibold mb-2 text-cyan-400">Tools & Platforms</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Git</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Github</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">MS 365</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">VS Code</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Figma</span>
+                                    </div>
+                                </div>
+                                <div class="w-full">
+                                    <h4 class="text-xl font-semibold mb-2 text-cyan-400">Concepts</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Artificial Intelligence</span>
+                                        <span class="skill-btn bg-slate-800 border border-slate-700 text-slate-300 font-medium py-2 px-4 rounded-lg">Problem Solving</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -430,6 +471,10 @@
                             <div class="journey-content">
                                 <h3 class="text-2xl font-bold text-white mb-2">Education Foundation</h3>
                                 <p class="text-slate-400">Completed schooling at New Vision School and intermediate at New Vision College.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                     <span class="bg-slate-700 text-cyan-200 px-3 py-1 rounded-full text-sm font-medium">10th: 10/10 GPA</span>
+                                     <span class="bg-slate-700 text-cyan-200 px-3 py-1 rounded-full text-sm font-medium">12th: 9.5/10 GPA</span>
+                                </div>
                             </div>
                         </div>
                          <div class="journey-item reveal">
@@ -439,6 +484,9 @@
                             <div class="journey-content">
                                 <h3 class="text-2xl font-bold text-white mb-2">B.Tech in CSE</h3>
                                 <p class="text-slate-400">Final year at Swarna Bharathi Institute of Science and Technology.</p>
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                     <span class="bg-slate-700 text-cyan-200 px-3 py-1 rounded-full text-sm font-medium">CGPA: 8.22</span>
+                                </div>
                             </div>
                         </div>
                          <div class="journey-item reveal">
@@ -471,23 +519,23 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <div class="glass-card rounded-xl overflow-hidden reveal">
-                            <img src="https://placehold.co/600x400/0d1117/3b82f6?text=Swiftly" alt="Swiftly App" class="w-full h-56 object-cover">
+                            <img src="https://i.ibb.co/bjc7SMsb/swiftly.png" alt="Swiftly App" class="w-full h-auto object-cover">
                             <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">Swiftly</h3><p class="text-slate-400 mb-4">An AI-powered hyperlocal delivery application designed for speed and efficiency in local commerce.</p></div>
                         </div>
                         <div class="glass-card rounded-xl overflow-hidden reveal" style="transition-delay: 0.1s;">
-                            <img src="https://placehold.co/600x400/0d1117/3b82f6?text=Shopwiser" alt="Shopwiser App" class="w-full h-56 object-cover">
+                            <img src="https://i.ibb.co/ymWRzFn5/shopwiser.png" alt="Shopwiser App" class="w-full h-auto object-cover">
                             <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">Shopwiser</h3><p class="text-slate-400 mb-4">An intelligent gadget configuration tool to help users find the perfect electronic gadgets based on their needs.</p></div>
                         </div>
                         <div class="glass-card rounded-xl overflow-hidden reveal" style="transition-delay: 0.2s;">
-                            <img src="https://placehold.co/600x400/0d1117/3b82f6?text=AI+Mail" alt="AI Mail App" class="w-full h-56 object-cover">
+                            <img src="https://i.ibb.co/XZrtp8yd/Poster-style-image-i.png" alt="AI Mail App" class="w-full h-auto object-cover">
                             <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">AI Email Composer</h3><p class="text-slate-400 mb-4">An AI-powered email composition tool that streamlines communication by intelligently generating email content.</p></div>
                         </div>
                          <div class="glass-card rounded-xl overflow-hidden reveal" style="transition-delay: 0.3s;">
-                            <img src="https://placehold.co/600x400/0d1117/3b82f6?text=College+Blog" alt="College Blog" class="w-full h-56 object-cover">
+                            <img src="https://i.ibb.co/vxLz4xVp/bg.png" alt="College Blog" class="w-full h-auto object-cover">
                             <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">College Blog</h3><p class="text-slate-400 mb-4">A full-featured blog platform built with Django, designed for the college community to share articles and updates.</p></div>
                         </div>
                          <div class="glass-card rounded-xl overflow-hidden reveal" style="transition-delay: 0.4s;">
-                            <img src="https://placehold.co/600x400/0d1117/3b82f6?text=UI/UX" alt="UI/UX Designs" class="w-full h-56 object-cover">
+                            <img src="https://i.ibb.co/xKTDXLbS/Landscape-image-illu.png" alt="UI/UX Designs" class="w-full h-auto object-cover">
                             <div class="p-6"><h3 class="text-2xl font-bold text-white mb-2">UI/UX Designs</h3><p class="text-slate-400 mb-4">A collection of user-centric and visually appealing designs for various web and mobile applications, created in Figma.</p></div>
                         </div>
                     </div>
@@ -506,8 +554,8 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/GvM8z9KZ/1742830842170.jpg">
                             <img src="https://i.ibb.co/GvM8z9KZ/1742830842170.jpg" alt="Vikasit Bharat Ambassador Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Vikasit Bharat Ambassador</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Certificate of Recognition for contributions as an ambassador.</p>
+                                <h3 class="text-xl font-bold text-white">District Level Recognition for my Innovation</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">Certificate of Recognition for contributions as an Innovator for my project Swiftly by the District Collector.</p>
                             </div>
                         </div>
 
@@ -515,8 +563,8 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/xqTGcQ7Z/1742830971050.jpg" style="transition-delay: 0.1s;">
                             <img src="https://i.ibb.co/xqTGcQ7Z/1742830971050.jpg" alt="Python for Data Science Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Python for Data Science</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Issued by IBM (Cognitive Class) for proficiency in Python for data analysis.</p>
+                                <h3 class="text-xl font-bold text-white">Runner Up in an Ideathon</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">In an Ideathon Conducted by RDIO our team won the Second Prize.</p>
                             </div>
                         </div>
 
@@ -524,26 +572,18 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/PzmmrGtz/1742988514942.jpg" style="transition-delay: 0.2s;">
                              <img src="https://i.ibb.co/PzmmrGtz/1742988514942.jpg" alt="Full Stack (MERN) Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Full Stack (MERN)</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Certificate of completion for Full Stack Web Development from DevTown.</p>
+                                <h3 class="text-xl font-bold text-white">Selection into State Level Youth Parliament</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">In an initiative by the Government of India to promote youth participation in politics under the Vikasit Bharat Initiative I was selected into the State Level.</p>
                             </div>
                         </div>
                         
-                        <!-- Certificate Card 4 -->
-                        <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/vvcpfBDG/1744814101244.jpg" style="transition-delay: 0.3s;">
-                            <img src="https://i.ibb.co/vvcpfBDG/1744814101244.jpg" alt="Web Development Internship Certificate" class="w-full h-48 object-contain bg-black/20">
-                            <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Web Development Internship</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Successfully completed a web development internship at CodSoft.</p>
-                            </div>
-                        </div>
 
                         <!-- Certificate Card 5 -->
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/x8dbZjvC/image.png" style="transition-delay: 0.4s;">
                             <img src="https://i.ibb.co/x8dbZjvC/image.png" alt="Python Programming Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Python Programming</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Programming Fundamentals using Python from Infosys Springboard.</p>
+                                <h3 class="text-xl font-bold text-white">GenAI Workshop</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">Participated in a workshop on Generative AI and its applications conducted in collaboration with Nxtwave and OpenAI.</p>
                             </div>
                         </div>
 
@@ -551,8 +591,8 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/BHpjD9qX/image.png" style="transition-delay: 0.5s;">
                             <img src="https://i.ibb.co/BHpjD9qX/image.png" alt="Salesforce Ranger Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Salesforce Ranger</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Achieved Ranger rank on the Salesforce Trailhead learning platform.</p>
+                                <h3 class="text-xl font-bold text-white">Workshop on MCP's by Nxtwave</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">Participated in a workshop on MCP's and built a project conducted by Nxtwave.</p>
                             </div>
                         </div>
                         
@@ -560,8 +600,8 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/rKXkgTpL/Robo-AI-Kolluri-Shiva-Koushik.jpg" style="transition-delay: 0.6s;">
                             <img src="https://i.ibb.co/rKXkgTpL/Robo-AI-Kolluri-Shiva-Koushik.jpg" alt="Robo AI Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Robo AI</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Certificate of participation in the Robo AI event.</p>
+                                <h3 class="text-xl font-bold text-white">Robo AI Workshop</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">Certificate of participation in the Robo AI workshop where I got to learn ans explore the world of Robotics.</p>
                             </div>
                         </div>
                         
@@ -569,8 +609,8 @@
                         <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/PZxh0jfL/BUILDING-STATIC-WEBSITE.jpg" style="transition-delay: 0.7s;">
                             <img src="https://i.ibb.co/PZxh0jfL/BUILDING-STATIC-WEBSITE.jpg" alt="Building a Static Website on AWS Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">Building a Static Website on AWS</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Completion of a project on building a static website on AWS.</p>
+                                <h3 class="text-xl font-bold text-white">Building a Static Website</h3>
+                                <p class="text-slate-400 mt-2 flex-grow">Completion of a project on building a static website by Nxtwave.</p>
                             </div>
                         </div>
                         
@@ -579,7 +619,7 @@
                             <img src="https://i.ibb.co/chDVgB4F/gen-AI-workshop.jpg" alt="Generative AI Workshop Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
                                 <h3 class="text-xl font-bold text-white">Generative AI Workshop</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Certificate of participation in a Generative AI workshop by Google Cloud.</p>
+                                <p class="text-slate-400 mt-2 flex-grow">Certificate of participation in a Generative AI workshop by Nxtwave.</p>
                             </div>
                         </div>
                         
@@ -588,16 +628,7 @@
                             <img src="https://i.ibb.co/Xfh8j2Pp/UI-UX-workshop.jpg" alt="UI/UX Workshop Certificate" class="w-full h-48 object-contain bg-black/20">
                             <div class="p-4 flex flex-col flex-grow">
                                 <h3 class="text-xl font-bold text-white">UI/UX Workshop</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Participation in a UI/UX workshop organized by GDSC.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Certificate Card 11 -->
-                        <div class="glass-card certificate-card rounded-xl overflow-hidden flex flex-col text-center reveal cursor-pointer" data-src="https://i.ibb.co/4Z51KHpq/XPM4-0-FUNDAMENTALS.jpg" style="transition-delay: 1.0s;">
-                            <img src="https://i.ibb.co/4Z51KHpq/XPM4-0-FUNDAMENTALS.jpg" alt="XPM4.0 Fundamentals Certificate" class="w-full h-48 object-contain bg-black/20">
-                            <div class="p-4 flex flex-col flex-grow">
-                                <h3 class="text-xl font-bold text-white">XPM4.0 Fundamentals</h3>
-                                <p class="text-slate-400 mt-2 flex-grow">Completion of the XPM4.0 Fundamentals course from L&T EduTech.</p>
+                                <p class="text-slate-400 mt-2 flex-grow">Participation in a UI/UX workshop organized by Nxtwave where I got to learn and explore the UI/UX space.</p>
                             </div>
                         </div>
 
@@ -612,7 +643,7 @@
                     <p class="max-w-2xl mx-auto text-slate-400 text-lg mb-8 reveal" style="transition-delay: 0.2s;">
                         I'm always open to discussing new projects, creative ideas, or opportunities to be part of an amazing team. Feel free to reach out!
                     </p>
-                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=heyhowareyouagain@gmail.com" target="_blank" class="inline-block bg-cyan-500 text-black font-bold py-3 px-8 rounded-lg hover:bg-cyan-400 transition duration-300 transform hover:scale-105 reveal" style="transition-delay: 0.4s;">
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=shivakoshik2005@gmail.com" target="_blank" class="inline-block bg-cyan-500 text-black font-bold py-3 px-8 rounded-lg hover:bg-cyan-400 transition duration-300 transform hover:scale-105 reveal" style="transition-delay: 0.4s;">
                         Say Hello
                     </a>
                 </div>
