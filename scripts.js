@@ -28,11 +28,13 @@ $('#project-grid').innerHTML = projects.map((p) => p.link
   ? `<a class="tile reveal" data-tilt href="${p.link}" target="_blank" rel="noopener">${shell(p)}</a>`
   : `<div class="tile reveal" data-tilt>${shell(p)}</div>`).join('');
 $('#spot').innerHTML = featured.map((c) => `<button class="feat reveal" data-full="${c.full}" aria-label="Open certificate: ${c.t}">${shell({ ...c, cta: 'View certificate' })}</button>`).join('');
-$('#rail').innerHTML = certs.map((c) => `<button class="tile reveal" data-tilt data-full="${c.full}" aria-label="Open certificate: ${c.t}">${shell({ ...c, cta: 'View certificate' })}</button>`).join('');
+const certHTML = (c, dup) => `<button class="tile" data-full="${c.full}" ${dup ? 'tabindex="-1" aria-hidden="true"' : ''} aria-label="Open certificate: ${c.t}">${shell({ ...c, cta: 'View certificate' })}</button>`;
+const certSet = (dup) => [...certs, ...certs].map((c) => certHTML(c, dup)).join('');
+$('#rail').innerHTML = `<div class="cloop">${certSet(false)}${certSet(true)}</div>`;
 
 /* ---------- Marquees ---------- */
 $$('[data-words]').forEach((el) => {
-  const w = el.dataset.words.split(','), html = [...w, ...w, ...w, ...w].map((x) => `<span>${x}</span>`).join('');
+  const w = el.dataset.words.split(','), html = Array(8).fill(w).flat().map((x) => `<span>${x}</span>`).join('');
   el.innerHTML = `<div class="track">${html}</div>`;
 });
 
@@ -72,11 +74,18 @@ if (window.THREE && !reduced) {
   const renderer = new THREE.WebGLRenderer({ canvas: $('#bg-canvas'), alpha: true, antialias: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   renderer.setSize(innerWidth, innerHeight);
-  const pos = new Float32Array((innerWidth < 700 ? 2500 : 6000) * 3);
-  for (let i = 0; i < pos.length; i++) pos[i] = (Math.random() - 0.5) * 600;
+  const N = innerWidth < 700 ? 1500 : 3500, pos = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { // stars sit on a far shell, so none ever pass close to the camera
+    const r = 150 + Math.random() * 350, th = Math.random() * 6.283, ph = Math.acos(2 * Math.random() - 1);
+    pos.set([r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th), r * Math.cos(ph)], i * 3);
+  }
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const stars = new THREE.Points(g, new THREE.PointsMaterial({ size: 0.8, color: 0xaab4c4, transparent: true }));
+  const tc = document.createElement('canvas'); tc.width = tc.height = 64;
+  const tx = tc.getContext('2d'), gr = tx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  gr.addColorStop(0, '#fff'); gr.addColorStop(0.3, 'rgba(255,255,255,.6)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+  tx.fillStyle = gr; tx.fillRect(0, 0, 64, 64);
+  const stars = new THREE.Points(g, new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, map: new THREE.CanvasTexture(tc), color: 0xaab4c4, transparent: true, depthWrite: false, opacity: 0.85 }));
   const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(7, 1.8, 140, 16), new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true, transparent: true, opacity: 0.2 }));
   const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(5, 1), new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.2 }));
   scene.add(stars, knot, ico);
@@ -99,13 +108,31 @@ if (window.THREE && !reduced) {
 
 /* ---------- Scroll effects ---------- */
 const links = $$('#nav a'), secs = links.map((a) => $(a.getAttribute('href')));
-const tl = $('.timeline'), fill = $('#line-fill'), rocket = $('#rocket');
+const jsec = $('#journey'), jtrack = $('#jtrack'), jfill = $('#jfill'), jrocket = $('#jrocket'), jcards = $$('.jcard');
+$('#jdots').innerHTML = jcards.map((c, i) => `<span style="left:${(i / (jcards.length - 1)) * 100}%">${c.dataset.t}</span>`).join('');
+const jdots = $$('#jdots span');
+const sizeJ = () => { if (!reduced) jsec.style.height = innerHeight + Math.max(0, jtrack.scrollWidth - innerWidth) + 'px'; };
+const jUpdate = () => {
+  if (reduced) return;
+  const r = jsec.getBoundingClientRect(), p = Math.max(0, Math.min(1, -r.top / (jsec.offsetHeight - innerHeight)));
+  jtrack.style.transform = `translate3d(${-p * Math.max(0, jtrack.scrollWidth - innerWidth)}px,0,0)`;
+  jfill.style.width = p * 100 + '%'; jrocket.style.left = p * 100 + '%';
+  jsec.style.setProperty('--jp', p);
+  jcards.forEach((c) => {
+    const b = c.getBoundingClientRect(), d = (b.left + b.width / 2 - innerWidth / 2) / innerWidth, a = Math.min(Math.abs(d), 1);
+    c.style.transform = `perspective(1000px) rotateY(${-d * 26}deg) scale(${1 - a * 0.16})`;
+    c.style.opacity = 1 - a * 0.55;
+    c.classList.toggle('active', a < 0.2);
+  });
+  jdots.forEach((d, i) => d.classList.toggle('on', p >= i / (jcards.length - 1) - 0.03));
+};
+addEventListener('resize', () => { sizeJ(); onScroll(); });
+addEventListener('load', () => { sizeJ(); onScroll(); });
+sizeJ();
 const onScroll = () => {
   sy = scrollY;
   $('#progress').style.width = (sy / (document.documentElement.scrollHeight - innerHeight)) * 100 + '%';
-  const r = tl.getBoundingClientRect(), p = Math.max(0, Math.min(1, (innerHeight * 0.6 - r.top) / r.height));
-  fill.style.height = p * 100 + '%';
-  rocket.style.top = Math.max(0, p * (r.height - 20) - 10) + 'px';
+  jUpdate();
   const lr = lit.getBoundingClientRect(), lp = (innerHeight * 0.85 - lr.top) / (lr.height + innerHeight * 0.3);
   words.forEach((w, i) => w.classList.toggle('on', i / words.length < lp));
   let cur = -1;
@@ -178,22 +205,11 @@ if (!reduced) addEventListener('click', (e) => {
   }
 });
 
-/* ---------- Certificate rail (buttons + drag) ---------- */
-const rail = $('#rail');
-$('#next').addEventListener('click', () => rail.scrollBy({ left: 320, behavior: 'smooth' }));
-$('#prev').addEventListener('click', () => rail.scrollBy({ left: -320, behavior: 'smooth' }));
-let down = false, sx = 0, sl = 0, moved = false;
-rail.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = rail.scrollLeft; });
-addEventListener('pointerup', () => (down = false));
-rail.addEventListener('pointermove', (e) => { if (!down) return; if (Math.abs(e.clientX - sx) > 5) moved = true; rail.style.scrollSnapType = 'none'; rail.scrollLeft = sl - (e.clientX - sx); });
-rail.addEventListener('pointerup', () => (rail.style.scrollSnapType = ''));
-
 /* ---------- Certificate modal ---------- */
 const modal = $('#modal'), mimg = $('#modal-img');
 let lastFocus;
 const closeModal = () => { modal.classList.remove('open'); lastFocus && lastFocus.focus(); };
 $$('[data-full]').forEach((c) => c.addEventListener('click', () => {
-  if (moved) { moved = false; return; }
   lastFocus = c; mimg.src = c.dataset.full; modal.classList.add('open'); $('#close').focus();
 }));
 $('#close').addEventListener('click', closeModal);
@@ -212,3 +228,24 @@ $('#copy').addEventListener('click', async () => {
 /* ---------- Loader ---------- */
 const hideLoader = () => setTimeout(() => $('#loader').classList.add('done'), 500);
 document.readyState === 'complete' ? hideLoader() : addEventListener('load', hideLoader);
+
+/* ---------- Tech code rain (faint, behind everything) ---------- */
+if (!reduced) {
+  const rc = $('#rain'), rx = rc.getContext('2d'), glyphs = '01{}[]<>/=;$#AI'.split('');
+  let drops = [];
+  const rs = () => { rc.width = innerWidth; rc.height = innerHeight; drops = Array.from({ length: Math.floor(innerWidth / 24) }, () => (Math.random() * -40) | 0); };
+  rs(); addEventListener('resize', rs);
+  let last = 0;
+  (function rain(t) {
+    requestAnimationFrame(rain);
+    if (document.hidden || t - last < 70) return;
+    last = t;
+    rx.globalCompositeOperation = 'destination-out'; rx.fillStyle = 'rgba(0,0,0,.14)'; rx.fillRect(0, 0, rc.width, rc.height);
+    rx.globalCompositeOperation = 'source-over'; rx.font = '14px JetBrains Mono, monospace';
+    drops.forEach((y, i) => {
+      rx.fillStyle = Math.random() > 0.9 ? '#8b5cf6' : '#22d3ee';
+      rx.fillText(glyphs[(Math.random() * glyphs.length) | 0], i * 24, y * 18);
+      drops[i] = y * 18 > rc.height && Math.random() > 0.975 ? 0 : y + 1;
+    });
+  })(0);
+}
