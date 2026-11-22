@@ -8,13 +8,14 @@
 <meta name="theme-color" content="#070b12">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@600;700;800&family=JetBrains+Mono:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <div id="loader"><div class="ring"></div><span>KSK</span></div>
 <div id="progress"></div><div id="glow"></div>
 <canvas id="bg-canvas"></canvas>
+<div class="tech-grid"></div><canvas id="rain"></canvas>
 <div class="aurora"><i></i><i></i><i></i></div>
 
 <header id="header">
@@ -64,13 +65,12 @@
     </div>
   </section>
 
-  <section id="journey" class="section">
-    <h2 class="title split">My journey</h2>
-    <div class="timeline"><div class="line"><i id="line-fill"></i></div><div class="rocket" id="rocket">🚀</div>
-      <article class="item reveal"><div class="dot">🎓</div><div class="card"><small>Chapter 1</small><h3>Education foundation</h3><p>Completed schooling and 12th at New Vision Institution, where my interest in tech grew into a decision to build my future in computers and technology.</p><div class="tags"><span>10th: 10/10 GPA</span><span>12th: 9.5/10 GPA</span></div></div></article>
-      <article class="item reveal"><div class="dot">💻</div><div class="card"><small>Chapter 2</small><h3>B.Tech in CSE</h3><p>Final year in Computer Science and Engineering at Swarna Bharathi Institute of Science and Technology. Joining this college wasn't my dream, but the work I've done here means I never regret it.</p><div class="tags"><span>CGPA: 8.24</span></div></div></article>
-      <article class="item reveal"><div class="dot">🧪</div><div class="card"><small>Chapter 3</small><h3>Project incubation</h3><p>Built Swiftly, Shopwiser, an AI Email Composer, a blog website and a secure college network for the Cisco Cyber Security internship, and wrote our college's weekly tech report.</p><div class="tags"><span>Swiftly</span><span>Shopwiser</span><span>Django Blog</span></div></div></article>
-      <article class="item reveal"><div class="dot">🌍</div><div class="card"><small>Next stop</small><h3>Future trajectory</h3><p>I want to keep upskilling and build a career where I work with tech and cars, share what I learn, and one day attend Apple WWDC.</p><div class="tags"><span>Tech</span><span>Cars</span><span>WWDC</span></div></div></article>
+  <section id="journey" class="jsec">
+    <div class="jpin">
+      <div class="jdeco"><i class="p1"></i><i class="p2"></i><i class="p3"></i></div>
+      <h2 class="title split">My journey</h2>
+      <div class="jview"><div class="jtrack" id="jtrack"><article class="jcard" data-t="Chapter 1"><b class="jn">01</b><div class="jico">🎓</div><small>Chapter 1</small><h3>Education foundation</h3><p>Completed schooling and 12th at New Vision Institution, where my interest in tech grew into a decision to build my future in computers and technology.</p><div class="tags"><span>10th: 10/10 GPA</span><span>12th: 9.5/10 GPA</span></div></article><article class="jcard" data-t="Chapter 2"><b class="jn">02</b><div class="jico">💻</div><small>Chapter 2</small><h3>B.Tech in CSE</h3><p>Final year in Computer Science and Engineering at Swarna Bharathi Institute of Science and Technology. Joining this college wasn't my dream, but the work I've done here means I never regret it.</p><div class="tags"><span>CGPA: 8.24</span></div></article><article class="jcard" data-t="Chapter 3"><b class="jn">03</b><div class="jico">🧪</div><small>Chapter 3</small><h3>Project incubation</h3><p>Built Swiftly, Shopwiser, an AI Email Composer, a blog website and a secure college network for the Cisco Cyber Security internship, and wrote our college's weekly tech report.</p><div class="tags"><span>Swiftly</span><span>Shopwiser</span><span>Django Blog</span><span>Cisco</span></div></article><article class="jcard" data-t="Next stop"><b class="jn">04</b><div class="jico">🌍</div><small>Next stop</small><h3>Future trajectory</h3><p>I want to keep upskilling and build a career where I work with tech and cars, share what I learn, and one day attend Apple WWDC.</p><div class="tags"><span>Tech</span><span>Cars</span><span>WWDC</span></div></article></div></div>
+      <div class="jbar"><div class="jline"><i id="jfill"></i><span id="jrocket">🚀</span></div><div class="jdots" id="jdots"></div></div>
     </div>
   </section>
 
@@ -82,8 +82,8 @@
   <section id="certifications" class="section">
     <h2 class="title split">Achievements &amp; certificates</h2>
     <div class="spot" id="spot"></div>
-    <div class="rail-head reveal"><h3>Workshops &amp; internships</h3><div><button id="prev" aria-label="Previous">←</button><button id="next" aria-label="Next">→</button></div></div>
-    <div class="rail" id="rail"></div>
+    <h3 class="sub reveal">Workshops &amp; internships</h3>
+    <div class="loop" id="rail"></div>
   </section>
 
   <section id="contact" class="section contact">
@@ -96,7 +96,7 @@
       </a>
       <button id="copy" class="btn ghost">shivakoshik2005@gmail.com <span>Copy</span></button>
     </div>
-    
+    <i class="float f1">✉️</i><i class="float f2">💡</i><i class="float f3">✨</i><i class="float f4">🚀</i>
   </section>
 </main>
 
