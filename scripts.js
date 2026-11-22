@@ -97,6 +97,34 @@ const drawBg = () => {
 };
 (function bgLoop() { if (!reduced) requestAnimationFrame(bgLoop); if (!document.hidden) drawBg(); })();
 
+/* ---------- Landing illustration: 3D wireframe knot + crystal ---------- */
+if (window.THREE && !reduced) {
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 1, 1000);
+  cam.position.z = 30;
+  const renderer = new THREE.WebGLRenderer({ canvas: $('#bg3d'), alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  const mat = (color, o) => new THREE.MeshBasicMaterial({ color, wireframe: true, transparent: true, opacity: o });
+  const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(7, 1.8, 140, 16), mat(0x5b9dff, 0.3));
+  const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(5, 1), mat(0x8b7bff, 0.3));
+  scene.add(knot, ico);
+  addEventListener('resize', () => { cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (document.hidden) return;
+    const mx = mouse.x > -900 ? mouse.x / innerWidth - 0.5 : 0, my = mouse.y > -900 ? mouse.y / innerHeight - 0.5 : 0;
+    cam.position.x += (mx * 8 - cam.position.x) * 0.04;
+    cam.position.y += (-my * 8 - cam.position.y) * 0.04;
+    cam.lookAt(scene.position);
+    knot.rotation.x += 0.003; knot.rotation.y += 0.004;
+    ico.rotation.x -= 0.004; ico.rotation.y += 0.003;
+    knot.position.set(-18 + Math.min(sy / 120, 30), 4 + sy / 150, -8);
+    ico.position.set(24 - Math.min(sy / 200, 20), -10 - sy / 220, -10);
+    renderer.render(scene, cam);
+  })();
+}
+
 /* ---------- Scroll effects ---------- */
 const links = $$('#nav a'), secs = links.map((a) => $(a.getAttribute('href')));
 const jsec = $('#journey'), jtrack = $('#jtrack'), jfill = $('#jfill'), jrocket = $('#jrocket'), jcards = $$('.jcard');
