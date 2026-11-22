@@ -23,7 +23,7 @@ const certs = [
   { t: 'Cisco Virtual Internship', thumb: 'https://i.ibb.co/V01ByHRz/1762867271456.jpg', full: 'https://i.ibb.co/chDVgB4F/gen-AI-workshop.jpg', d: 'Learned networking and cybersecurity and designed a secure virtual college network in Packet Tracer.' },
   { t: 'Infosys Virtual Internship 6.0', thumb: 'https://i.ibb.co/S7VSHt2Q/1769774202538.jpg', full: 'https://i.ibb.co/2sZz8n9F/CCNA-Cyber-Security.jpg', d: 'Shortlisted and contributed to the assigned project.' }
 ];
-const shell = (o) => `<div class="thumb"><img src="${o.img || o.thumb}" alt="${o.t}" loading="lazy"></div><div class="body">${o.badge ? `<span class="badge">${o.badge}</span>` : ''}<h3>${o.t}</h3><p>${o.d}</p>${o.cta ? `<span class="go">${o.cta} →</span>` : ''}</div><i class="shine"></i>`;
+const shell = (o) => `<div class="thumb"><img src="${o.img || o.thumb}" alt="${o.t}" loading="lazy"></div><div class="body">${o.badge ? `<span class="badge"><i data-ic="trophy"></i>${o.badge}</span>` : ''}<h3>${o.t}</h3><p>${o.d}</p>${o.cta ? `<span class="go">${o.cta} →</span>` : ''}</div><i class="shine"></i>`;
 $('#project-grid').innerHTML = projects.map((p) => p.link
   ? `<a class="tile reveal" data-tilt href="${p.link}" target="_blank" rel="noopener">${shell(p)}</a>`
   : `<div class="tile reveal" data-tilt>${shell(p)}</div>`).join('');
@@ -65,46 +65,37 @@ const lit = $('#lit');
 lit.innerHTML = lit.textContent.split(' ').map((w) => `<span class="l">${w}</span>`).join(' ');
 const words = $$('.l', lit);
 
-/* ---------- Three.js: stars + wireframe knot ---------- */
-let mx = 0, my = 0, sy = 0;
-if (window.THREE && !reduced) {
-  const scene = new THREE.Scene();
-  const cam = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 1, 1000);
-  cam.position.z = 30;
-  const renderer = new THREE.WebGLRenderer({ canvas: $('#bg-canvas'), alpha: true, antialias: true });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-  renderer.setSize(innerWidth, innerHeight);
-  const N = innerWidth < 700 ? 1500 : 3500, pos = new Float32Array(N * 3);
-  for (let i = 0; i < N; i++) { // stars sit on a far shell, so none ever pass close to the camera
-    const r = 150 + Math.random() * 350, th = Math.random() * 6.283, ph = Math.acos(2 * Math.random() - 1);
-    pos.set([r * Math.sin(ph) * Math.cos(th), r * Math.sin(ph) * Math.sin(th), r * Math.cos(ph)], i * 3);
+/* ---------- Background: drifting neural network + twinkling stars ---------- */
+let sy = 0, mouse = { x: -999, y: -999 };
+const bc = $('#bg-canvas'), bx = bc.getContext('2d'), dpr = Math.min(devicePixelRatio, 2);
+let W, H, nodes = [], tw = [], pulses = [], tick = 0;
+const bgInit = () => {
+  W = innerWidth; H = innerHeight; bc.width = W * dpr; bc.height = H * dpr; bx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  nodes = Array.from({ length: W < 700 ? 36 : Math.min(85, Math.floor(W / 20)) }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 1.5 + 0.9 }));
+  tw = Array.from({ length: W < 700 ? 60 : 140 }, () => ({ x: Math.random() * W, y: Math.random() * H, a: Math.random() * 6.28, s: Math.random() * 0.03 + 0.008 }));
+};
+bgInit(); addEventListener('resize', bgInit);
+addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+const drawBg = () => {
+  bx.clearRect(0, 0, W, H);
+  const off = -sy * 0.08;
+  tw.forEach((t) => { bx.fillStyle = `rgba(190,210,255,${0.12 + 0.4 * Math.abs(Math.sin((t.a += t.s)))})`; bx.fillRect(t.x, (((t.y + off * 0.5) % H) + H) % H, 1.3, 1.3); });
+  const P = nodes.map((n) => { if (!reduced) { n.x += n.vx; n.y += n.vy; if (n.x < 0 || n.x > W) n.vx *= -1; if (n.y < 0 || n.y > H) n.vy *= -1; } return { n, x: n.x, y: (((n.y + off) % H) + H) % H }; });
+  const links = [];
+  for (let i = 0; i < P.length; i++) {
+    for (let j = i + 1; j < P.length; j++) {
+      const d = Math.hypot(P[i].x - P[j].x, P[i].y - P[j].y);
+      if (d < 150) { bx.strokeStyle = `rgba(100,150,255,${(1 - d / 150) * 0.32})`; bx.lineWidth = 1; bx.beginPath(); bx.moveTo(P[i].x, P[i].y); bx.lineTo(P[j].x, P[j].y); bx.stroke(); links.push([P[i], P[j]]); }
+    }
+    const dm = Math.hypot(P[i].x - mouse.x, P[i].y - mouse.y);
+    if (dm < 190) { bx.strokeStyle = `rgba(170,150,255,${(1 - dm / 190) * 0.55})`; bx.beginPath(); bx.moveTo(P[i].x, P[i].y); bx.lineTo(mouse.x, mouse.y); bx.stroke(); }
   }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const tc = document.createElement('canvas'); tc.width = tc.height = 64;
-  const tx = tc.getContext('2d'), gr = tx.createRadialGradient(32, 32, 0, 32, 32, 32);
-  gr.addColorStop(0, '#fff'); gr.addColorStop(0.3, 'rgba(255,255,255,.6)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
-  tx.fillStyle = gr; tx.fillRect(0, 0, 64, 64);
-  const stars = new THREE.Points(g, new THREE.PointsMaterial({ size: 3, sizeAttenuation: false, map: new THREE.CanvasTexture(tc), color: 0xaab4c4, transparent: true, depthWrite: false, opacity: 0.85 }));
-  const knot = new THREE.Mesh(new THREE.TorusKnotGeometry(7, 1.8, 140, 16), new THREE.MeshBasicMaterial({ color: 0x22d3ee, wireframe: true, transparent: true, opacity: 0.2 }));
-  const ico = new THREE.Mesh(new THREE.IcosahedronGeometry(5, 1), new THREE.MeshBasicMaterial({ color: 0x8b5cf6, wireframe: true, transparent: true, opacity: 0.2 }));
-  scene.add(stars, knot, ico);
-  addEventListener('resize', () => { cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
-  addEventListener('mousemove', (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; });
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (document.hidden) return;
-    cam.position.x += (mx * 8 - cam.position.x) * 0.04;
-    cam.position.y += (-my * 8 - cam.position.y) * 0.04;
-    cam.lookAt(scene.position);
-    stars.rotation.y += 0.0002; stars.rotation.x = sy * 0.00004;
-    knot.rotation.x += 0.003; knot.rotation.y += 0.004;
-    ico.rotation.x -= 0.004; ico.rotation.y += 0.003;
-    knot.position.set(-18 + Math.min(sy / 120, 30), 4 + sy / 150, -8);
-    ico.position.set(24 - Math.min(sy / 200, 20), -10 - sy / 220, -10);
-    renderer.render(scene, cam);
-  })();
-}
+  P.forEach((p) => { bx.fillStyle = 'rgba(140,175,255,.85)'; bx.beginPath(); bx.arc(p.x, p.y, p.n.r, 0, 6.283); bx.fill(); });
+  if (!reduced && ++tick % 35 === 0 && links.length) pulses.push({ l: links[(Math.random() * links.length) | 0], t: 0 });
+  pulses = pulses.filter((q) => (q.t += 0.025) < 1);
+  pulses.forEach((q) => { const [a, b] = q.l, x = a.x + (b.x - a.x) * q.t, y = a.y + (b.y - a.y) * q.t; bx.fillStyle = '#c9b8ff'; bx.shadowColor = '#8b7bff'; bx.shadowBlur = 12; bx.beginPath(); bx.arc(x, y, 2.2, 0, 6.283); bx.fill(); bx.shadowBlur = 0; });
+};
+(function bgLoop() { if (!reduced) requestAnimationFrame(bgLoop); if (!document.hidden) drawBg(); })();
 
 /* ---------- Scroll effects ---------- */
 const links = $$('#nav a'), secs = links.map((a) => $(a.getAttribute('href')));
@@ -199,7 +190,7 @@ if (!reduced) addEventListener('click', (e) => {
   for (let i = 0; i < 10; i++) {
     const s = document.createElement('i'), a = (i / 10) * Math.PI * 2, d = 30 + Math.random() * 40;
     s.className = 'spark';
-    s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px;background:${i % 2 ? '#22d3ee' : '#8b5cf6'}`;
+    s.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d}px;background:${i % 2 ? '#5b9dff' : '#8b7bff'}`;
     document.body.appendChild(s);
     setTimeout(() => s.remove(), 700);
   }
@@ -225,27 +216,25 @@ $('#copy').addEventListener('click', async () => {
   setTimeout(() => $('#toast').classList.remove('show'), 1800);
 });
 
+
+/* ---------- Tech line icons ---------- */
+const P = {
+  cap: '<path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5M22 10v6"/>',
+  terminal: '<path d="m4 17 6-6-6-6M12 19h8"/>',
+  code: '<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>',
+  chip: '<rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v4M15 1v4M9 19v4M15 19v4M1 9h4M1 15h4M19 9h4M19 15h4"/>',
+  globe: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/>',
+  rocket: '<path d="M4.5 16.5c-1.5 1.3-2 5-2 5s3.7-.5 5-2c.7-.8.7-2.1-.1-2.9a2.1 2.1 0 0 0-2.9-.1z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.9A12.9 12.9 0 0 1 22 2c0 2.7-.8 7.5-6 11a22 22 0 0 1-4 2z"/><path d="M9 12H4s.6-3 2-4c1.6-1.1 5 0 5 0M12 15v5s3-.6 4-2c1.1-1.6 0-5 0-5"/>',
+  mail: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>',
+  bulb: '<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V18h6v-1.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+  spark: '<path d="M12 2v6M12 16v6M2 12h6M16 12h6M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/>',
+  trophy: '<path d="M8 21h8M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+  layers: '<path d="m12 2 10 5-10 5L2 7l10-5z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/>',
+  award: '<circle cx="12" cy="8" r="6"/><path d="m8.2 13.5-1.2 8.5 5-3 5 3-1.2-8.5"/>',
+  arrow: '<path d="M7 17 17 7M8 7h9v9"/>'
+};
+$$('[data-ic]').forEach((el) => { el.innerHTML = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${P[el.dataset.ic] || ''}</svg>`; });
+
 /* ---------- Loader ---------- */
 const hideLoader = () => setTimeout(() => $('#loader').classList.add('done'), 500);
 document.readyState === 'complete' ? hideLoader() : addEventListener('load', hideLoader);
-
-/* ---------- Tech code rain (faint, behind everything) ---------- */
-if (!reduced) {
-  const rc = $('#rain'), rx = rc.getContext('2d'), glyphs = '01{}[]<>/=;$#AI'.split('');
-  let drops = [];
-  const rs = () => { rc.width = innerWidth; rc.height = innerHeight; drops = Array.from({ length: Math.floor(innerWidth / 24) }, () => (Math.random() * -40) | 0); };
-  rs(); addEventListener('resize', rs);
-  let last = 0;
-  (function rain(t) {
-    requestAnimationFrame(rain);
-    if (document.hidden || t - last < 70) return;
-    last = t;
-    rx.globalCompositeOperation = 'destination-out'; rx.fillStyle = 'rgba(0,0,0,.14)'; rx.fillRect(0, 0, rc.width, rc.height);
-    rx.globalCompositeOperation = 'source-over'; rx.font = '14px JetBrains Mono, monospace';
-    drops.forEach((y, i) => {
-      rx.fillStyle = Math.random() > 0.9 ? '#8b5cf6' : '#22d3ee';
-      rx.fillText(glyphs[(Math.random() * glyphs.length) | 0], i * 24, y * 18);
-      drops[i] = y * 18 > rc.height && Math.random() > 0.975 ? 0 : y + 1;
-    });
-  })(0);
-}
